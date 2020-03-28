@@ -48,10 +48,14 @@ class LocalClient(svn.common.CommonClient):
             args,
             wd=self.path)
 
-    def update(self, rel_filepaths=[], revision=None):
+    def update(self, rel_filepaths=[], revision=None, ignore_externals=False):
         cmd = []
         if revision is not None:
             cmd += ['-r', str(revision)]
+
+        if ignore_externals:
+            cmd += ['--ignore-externals']
+
         cmd += rel_filepaths
         self.run_command(
             'update',
